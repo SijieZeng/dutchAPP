@@ -92,7 +92,7 @@ class ProfileScreen extends ConsumerWidget {
             child: OutlinedButton.icon(
               onPressed: () {
                 storage.setLoggedIn(false);
-                ref.read(isLoggedInProvider.notifier).state = false;
+                ref.read(isLoggedInProvider.notifier).set(false);
                 context.go('/login');
               },
               icon: const Icon(Icons.logout_rounded),

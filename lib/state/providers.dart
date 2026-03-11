@@ -8,48 +8,113 @@ final localStorageProvider = Provider<LocalStorageService>((ref) {
 });
 
 // Selected textbook
-final selectedTextbookProvider = StateProvider<Textbook>((ref) {
-  return Textbook.nederlandsInGang;
-});
+class SelectedTextbookNotifier extends Notifier<Textbook> {
+  @override
+  Textbook build() => Textbook.nederlandsInGang;
+  void set(Textbook value) => state = value;
+}
+
+final selectedTextbookProvider =
+    NotifierProvider<SelectedTextbookNotifier, Textbook>(
+        SelectedTextbookNotifier.new);
 
 // Auth state
-final isLoggedInProvider = StateProvider<bool>((ref) {
-  return false;
-});
+class IsLoggedInNotifier extends Notifier<bool> {
+  @override
+  bool build() => false;
+  void set(bool value) => state = value;
+}
+
+final isLoggedInProvider =
+    NotifierProvider<IsLoggedInNotifier, bool>(IsLoggedInNotifier.new);
 
 // Check-in dates
-final checkInDatesProvider = StateProvider<List<String>>((ref) {
-  return [];
-});
+class CheckInDatesNotifier extends Notifier<List<String>> {
+  @override
+  List<String> build() => [];
+  void set(List<String> value) => state = value;
+}
+
+final checkInDatesProvider =
+    NotifierProvider<CheckInDatesNotifier, List<String>>(
+        CheckInDatesNotifier.new);
 
 // Selected tenses for werkwoorden practice
-final selectedTensesProvider = StateProvider<Set<String>>((ref) {
-  return {'tegenwoordige_tijd'};
-});
+class SelectedTensesNotifier extends Notifier<Set<String>> {
+  @override
+  Set<String> build() => {'tegenwoordige_tijd'};
+  void set(Set<String> value) => state = value;
+}
+
+final selectedTensesProvider =
+    NotifierProvider<SelectedTensesNotifier, Set<String>>(
+        SelectedTensesNotifier.new);
 
 // Verb practice source: 'textbook' or 'irregular'
-final verbPracticeSourceProvider = StateProvider<String>((ref) {
-  return 'textbook';
-});
+class VerbPracticeSourceNotifier extends Notifier<String> {
+  @override
+  String build() => 'textbook';
+  void set(String value) => state = value;
+}
+
+final verbPracticeSourceProvider =
+    NotifierProvider<VerbPracticeSourceNotifier, String>(
+        VerbPracticeSourceNotifier.new);
 
 // Bookmarked word IDs
-final bookmarkedWordIdsProvider = StateProvider<Set<String>>((ref) {
-  return <String>{};
-});
+class BookmarkedWordIdsNotifier extends Notifier<Set<String>> {
+  @override
+  Set<String> build() => <String>{};
+  void set(Set<String> value) => state = value;
+}
+
+final bookmarkedWordIdsProvider =
+    NotifierProvider<BookmarkedWordIdsNotifier, Set<String>>(
+        BookmarkedWordIdsNotifier.new);
 
 // Learned word IDs
-final learnedWordIdsProvider = StateProvider<Set<String>>((ref) {
-  return <String>{};
-});
+class LearnedWordIdsNotifier extends Notifier<Set<String>> {
+  @override
+  Set<String> build() => <String>{};
+  void set(Set<String> value) => state = value;
+}
+
+final learnedWordIdsProvider =
+    NotifierProvider<LearnedWordIdsNotifier, Set<String>>(
+        LearnedWordIdsNotifier.new);
 
 // Repeat pool word IDs
-final repeatPoolProvider = StateProvider<List<String>>((ref) {
-  return [];
-});
+class RepeatPoolNotifier extends Notifier<List<String>> {
+  @override
+  List<String> build() => [];
+  void set(List<String> value) => state = value;
+}
+
+final repeatPoolProvider =
+    NotifierProvider<RepeatPoolNotifier, List<String>>(
+        RepeatPoolNotifier.new);
 
 // Stats
-final todayLearnedCountProvider = StateProvider<int>((ref) => 0);
-final todayReviewedCountProvider = StateProvider<int>((ref) => 0);
-final totalLearnedCountProvider = StateProvider<int>((ref) => 0);
-final todayDurationProvider = StateProvider<Duration>((ref) => Duration.zero);
-final totalDurationProvider = StateProvider<Duration>((ref) => Duration.zero);
+class IntNotifier extends Notifier<int> {
+  @override
+  int build() => 0;
+  void set(int value) => state = value;
+  void increment() => state++;
+}
+
+class DurationNotifier extends Notifier<Duration> {
+  @override
+  Duration build() => Duration.zero;
+  void set(Duration value) => state = value;
+}
+
+final todayLearnedCountProvider =
+    NotifierProvider<IntNotifier, int>(IntNotifier.new);
+final todayReviewedCountProvider =
+    NotifierProvider<IntNotifier, int>(IntNotifier.new);
+final totalLearnedCountProvider =
+    NotifierProvider<IntNotifier, int>(IntNotifier.new);
+final todayDurationProvider =
+    NotifierProvider<DurationNotifier, Duration>(DurationNotifier.new);
+final totalDurationProvider =
+    NotifierProvider<DurationNotifier, Duration>(DurationNotifier.new);

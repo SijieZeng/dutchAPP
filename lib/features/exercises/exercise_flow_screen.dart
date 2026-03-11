@@ -63,7 +63,7 @@ class _ExerciseFlowScreenState extends ConsumerState<ExerciseFlowScreen> {
       // Add to repeat pool
       final pool = ref.read(repeatPoolProvider);
       if (!pool.contains(word.id)) {
-        ref.read(repeatPoolProvider.notifier).state = [...pool, word.id];
+        ref.read(repeatPoolProvider.notifier).set([...pool, word.id]);
       }
     }
 
@@ -87,21 +87,21 @@ class _ExerciseFlowScreenState extends ConsumerState<ExerciseFlowScreen> {
     if (wasCorrect) {
       // Mark as learned
       final learned = ref.read(learnedWordIdsProvider);
-      ref.read(learnedWordIdsProvider.notifier).state = {...learned, word.id};
+      ref.read(learnedWordIdsProvider.notifier).set({...learned, word.id});
 
       // Remove from repeat pool if present
       final pool = ref.read(repeatPoolProvider);
-      ref.read(repeatPoolProvider.notifier).state =
-          pool.where((id) => id != word.id).toList();
+      ref.read(repeatPoolProvider.notifier).set(
+          pool.where((id) => id != word.id).toList());
 
       // Update stats
       if (widget.isReviewMode) {
-        ref.read(todayReviewedCountProvider.notifier).state++;
+        ref.read(todayReviewedCountProvider.notifier).increment();
       } else {
-        ref.read(todayLearnedCountProvider.notifier).state++;
+        ref.read(todayLearnedCountProvider.notifier).increment();
       }
-      ref.read(totalLearnedCountProvider.notifier).state =
-          ref.read(learnedWordIdsProvider).length;
+      ref.read(totalLearnedCountProvider.notifier).set(
+          ref.read(learnedWordIdsProvider).length);
     }
 
     if (_currentIndex + 1 < _wordQueue.length) {
@@ -157,10 +157,10 @@ class _ExerciseFlowScreenState extends ConsumerState<ExerciseFlowScreen> {
               onComplete: _onBetekenisComplete,
               onBookmark: () {
                 final bookmarked = ref.read(bookmarkedWordIdsProvider);
-                ref.read(bookmarkedWordIdsProvider.notifier).state = {
+                ref.read(bookmarkedWordIdsProvider.notifier).set({
                   ...bookmarked,
                   word.id
-                };
+                });
               },
             )
           : ConjugationExercise(

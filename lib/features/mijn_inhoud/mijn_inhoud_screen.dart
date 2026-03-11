@@ -93,7 +93,7 @@ class MijnInhoudScreen extends ConsumerWidget {
                     ref.read(selectedTextbookProvider).id,
                 selectedColor: AppColors.orange,
                 onTap: () {
-                  ref.read(selectedTextbookProvider.notifier).state = book;
+                  ref.read(selectedTextbookProvider.notifier).set(book);
                   ref
                       .read(localStorageProvider)
                       .setCurrentTextbookId(book.id);

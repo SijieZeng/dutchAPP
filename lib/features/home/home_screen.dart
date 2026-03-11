@@ -131,8 +131,7 @@ class HomeScreen extends ConsumerWidget {
                       onTap: () {
                         if (!isCheckedIn) {
                           final updated = <String>[...checkInDates, todayStr];
-                          ref.read(checkInDatesProvider.notifier).state =
-                              updated;
+                          ref.read(checkInDatesProvider.notifier).set(updated);
                           ref
                               .read(localStorageProvider)
                               .setCheckInDates(updated);

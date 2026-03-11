@@ -56,7 +56,7 @@ class WerkwoordenScreen extends ConsumerWidget {
                   ? const Icon(Icons.check_circle, color: AppColors.orange)
                   : null,
               onTap: () {
-                ref.read(verbPracticeSourceProvider.notifier).state = 'textbook';
+                ref.read(verbPracticeSourceProvider.notifier).set('textbook');
               },
             ),
           ),
@@ -78,7 +78,7 @@ class WerkwoordenScreen extends ConsumerWidget {
                   ? const Icon(Icons.check_circle, color: AppColors.orange)
                   : null,
               onTap: () {
-                ref.read(verbPracticeSourceProvider.notifier).state = 'irregular';
+                ref.read(verbPracticeSourceProvider.notifier).set('irregular');
               },
             ),
           ),
@@ -109,7 +109,7 @@ class WerkwoordenScreen extends ConsumerWidget {
                             color: AppColors.orange)
                         : null,
                     onTap: () {
-                      ref.read(selectedTextbookProvider.notifier).state = book;
+                      ref.read(selectedTextbookProvider.notifier).set(book);
                     },
                   ),
                 )),
@@ -136,8 +136,7 @@ class WerkwoordenScreen extends ConsumerWidget {
                       current.remove(entry.key);
                     }
                     if (current.isNotEmpty) {
-                      ref.read(selectedTensesProvider.notifier).state =
-                          current;
+                      ref.read(selectedTensesProvider.notifier).set(current);
                     }
                   },
                 ),

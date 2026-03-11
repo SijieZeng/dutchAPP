@@ -103,11 +103,11 @@ class WordListScreen extends ConsumerWidget {
                             if (current.contains(word.id)) {
                               ref
                                   .read(bookmarkedWordIdsProvider.notifier)
-                                  .state = <String>{...current}..remove(word.id);
+                                  .set(<String>{...current}..remove(word.id));
                             } else {
                               ref
                                   .read(bookmarkedWordIdsProvider.notifier)
-                                  .state = {...current, word.id};
+                                  .set({...current, word.id});
                             }
                           },
                           child: Icon(

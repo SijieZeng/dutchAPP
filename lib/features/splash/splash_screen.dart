@@ -33,8 +33,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       final storage = ref.read(localStorageProvider);
       if (storage.isLoggedIn) {
         // Restore state from storage
-        ref.read(isLoggedInProvider.notifier).state = true;
-        ref.read(checkInDatesProvider.notifier).state = storage.checkInDates;
+        ref.read(isLoggedInProvider.notifier).set(true);
+        ref.read(checkInDatesProvider.notifier).set(storage.checkInDates);
         context.go('/home');
       } else {
         context.go('/login');

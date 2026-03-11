@@ -51,7 +51,7 @@ class LoginScreen extends ConsumerWidget {
                     storage.setLoggedIn(true);
                     storage.setUserName('Student');
                     storage.setUserEmail('student@gmail.com');
-                    ref.read(isLoggedInProvider.notifier).state = true;
+                    ref.read(isLoggedInProvider.notifier).set(true);
                     context.go('/home');
                   },
                   icon: const Text(
