@@ -34,12 +34,12 @@ final verbPracticeSourceProvider = StateProvider<String>((ref) {
 
 // Bookmarked word IDs
 final bookmarkedWordIdsProvider = StateProvider<Set<String>>((ref) {
-  return {};
+  return <String>{};
 });
 
 // Learned word IDs
 final learnedWordIdsProvider = StateProvider<Set<String>>((ref) {
-  return {};
+  return <String>{};
 });
 
 // Repeat pool word IDs

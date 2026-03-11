@@ -129,7 +129,7 @@ class WerkwoordenScreen extends ConsumerWidget {
                   value: selectedTenses.contains(entry.key),
                   activeColor: AppColors.orange,
                   onChanged: (checked) {
-                    final current = {...selectedTenses};
+                    final current = <String>{...selectedTenses};
                     if (checked == true) {
                       current.add(entry.key);
                     } else {

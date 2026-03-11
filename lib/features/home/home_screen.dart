@@ -130,7 +130,7 @@ class HomeScreen extends ConsumerWidget {
                     child: FrostedCard(
                       onTap: () {
                         if (!isCheckedIn) {
-                          final updated = [...checkInDates, todayStr];
+                          final updated = <String>[...checkInDates, todayStr];
                           ref.read(checkInDatesProvider.notifier).state =
                               updated;
                           ref

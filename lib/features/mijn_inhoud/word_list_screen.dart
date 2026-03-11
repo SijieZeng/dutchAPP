@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/app_colors.dart';
 import '../../state/providers.dart';
 import '../../data/mock/mock_words.dart';
-import '../../data/models/word.dart';
 
 class WordListScreen extends ConsumerWidget {
   final String category;
@@ -104,7 +103,7 @@ class WordListScreen extends ConsumerWidget {
                             if (current.contains(word.id)) {
                               ref
                                   .read(bookmarkedWordIdsProvider.notifier)
-                                  .state = {...current}..remove(word.id);
+                                  .state = <String>{...current}..remove(word.id);
                             } else {
                               ref
                                   .read(bookmarkedWordIdsProvider.notifier)
