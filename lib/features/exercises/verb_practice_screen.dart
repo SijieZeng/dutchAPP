@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/app_colors.dart';
 import '../../state/providers.dart';
 import '../../data/models/verb_conjugation.dart';
-import '../../data/mock/mock_verbs.dart';
 import '../../data/textbooks/irregular_verbs_data.dart';
 import 'conjugation/conjugation_screen.dart';
 
@@ -28,13 +27,22 @@ class _VerbPracticeScreenState extends ConsumerState<VerbPracticeScreen> {
   }
 
   void _buildVerbQueue() {
-    // Use all irregular verbs + verbs from NIG/NIA
-    final allVerbs = [...irregularVerbsList, ...mockVerbs];
+    final frequencyFilter = ref.read(verbFrequencyFilterProvider);
+    final freq = frequencyFilter == 'high'
+        ? VerbFrequency.high
+        : (frequencyFilter == 'medium'
+            ? VerbFrequency.medium
+            : VerbFrequency.low);
 
-    // Deduplicate by infinitive (keep first occurrence)
+    // Filter irregular verbs by selected frequency
+    final filtered = getVerbsByFrequency(freq)
+        .map((v) => v.conjugation)
+        .toList();
+
+    // Deduplicate by infinitive
     final seen = <String>{};
     final unique = <VerbConjugation>[];
-    for (final v in allVerbs) {
+    for (final v in filtered) {
       if (seen.add(v.infinitive)) {
         unique.add(v);
       }
@@ -130,6 +138,7 @@ class _VerbPracticeScreenState extends ConsumerState<VerbPracticeScreen> {
         ),
       ),
       body: ConjugationExercise(
+        key: ValueKey(verb.infinitive),
         verb: verb,
         selectedTenses: selectedTenses,
         onComplete: _onComplete,

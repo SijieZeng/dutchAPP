@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../state/providers.dart';
-import '../../data/models/textbook.dart';
+import '../../data/textbooks/irregular_verbs_data.dart';
 
 class WerkwoordenScreen extends ConsumerWidget {
   const WerkwoordenScreen({super.key});
@@ -17,11 +17,29 @@ class WerkwoordenScreen extends ConsumerWidget {
     'conditionalis': 'Conditionalis',
   };
 
+  static const _frequencyOptions = {
+    'high': {
+      'title': 'Meest frequente woorden',
+      'subtitle': '0-2000 meest frequente woorden',
+      'icon': Icons.star_rounded,
+    },
+    'medium': {
+      'title': 'Woorden met frequentie 2000-5000',
+      'subtitle': 'Woorden met een frequentie tussen 2000 en 5000',
+      'icon': Icons.star_half_rounded,
+    },
+    'low': {
+      'title': 'Woorden met frequentie boven 5000',
+      'subtitle': 'Woorden met een frequentie boven 5000',
+      'icon': Icons.star_border_rounded,
+    },
+  };
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final textbook = ref.watch(selectedTextbookProvider);
     final selectedTenses = ref.watch(selectedTensesProvider);
     final practiceSource = ref.watch(verbPracticeSourceProvider);
+    final frequencyFilter = ref.watch(verbFrequencyFilterProvider);
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -73,7 +91,7 @@ class WerkwoordenScreen extends ConsumerWidget {
                     : AppColors.textHint,
               ),
               title: const Text('Onregelmatige werkwoorden'),
-              subtitle: const Text('80 meest voorkomende onregelmatige werkwoorden'),
+              subtitle: Text('${allIrregularVerbs.length} onregelmatige werkwoorden'),
               trailing: practiceSource == 'irregular'
                   ? const Icon(Icons.check_circle, color: AppColors.orange)
                   : null,
@@ -84,35 +102,42 @@ class WerkwoordenScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 24),
 
-          // Textbook selector (only for textbook mode)
-          if (practiceSource == 'textbook') ...[
+          // Frequency selector (only for irregular mode)
+          if (practiceSource == 'irregular') ...[
             Text(
-              'Kies je lesboek',
+              'Frequentie',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 12),
-            ...Textbook.all.map((book) => Card(
-                  color: book.id == textbook.id
-                      ? AppColors.orange.withValues(alpha: 0.15)
-                      : AppColors.surface,
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.menu_book,
-                      color: book.id == textbook.id
-                          ? AppColors.orange
-                          : AppColors.textHint,
-                    ),
-                    title: Text(book.name),
-                    subtitle: Text('Niveau ${book.level}'),
-                    trailing: book.id == textbook.id
-                        ? const Icon(Icons.check_circle,
-                            color: AppColors.orange)
-                        : null,
-                    onTap: () {
-                      ref.read(selectedTextbookProvider.notifier).set(book);
-                    },
+            ..._frequencyOptions.entries.map((entry) {
+              final key = entry.key;
+              final info = entry.value;
+              final freq = key == 'high'
+                  ? VerbFrequency.high
+                  : (key == 'medium' ? VerbFrequency.medium : VerbFrequency.low);
+              final count = getVerbsByFrequency(freq).length;
+              return Card(
+                color: frequencyFilter == key
+                    ? AppColors.orange.withValues(alpha: 0.15)
+                    : AppColors.surface,
+                child: ListTile(
+                  leading: Icon(
+                    info['icon'] as IconData,
+                    color: frequencyFilter == key
+                        ? AppColors.orange
+                        : AppColors.textHint,
                   ),
-                )),
+                  title: Text(info['title'] as String),
+                  subtitle: Text('${info['subtitle']} ($count werkwoorden)'),
+                  trailing: frequencyFilter == key
+                      ? const Icon(Icons.check_circle, color: AppColors.orange)
+                      : null,
+                  onTap: () {
+                    ref.read(verbFrequencyFilterProvider.notifier).set(key);
+                  },
+                ),
+              );
+            }),
             const SizedBox(height: 24),
           ],
 

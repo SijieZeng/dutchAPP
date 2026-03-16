@@ -61,6 +61,17 @@ final verbPracticeSourceProvider =
     NotifierProvider<VerbPracticeSourceNotifier, String>(
         VerbPracticeSourceNotifier.new);
 
+// Verb frequency filter: 'high', 'medium', 'low'
+class VerbFrequencyFilterNotifier extends Notifier<String> {
+  @override
+  String build() => 'high';
+  void set(String value) => state = value;
+}
+
+final verbFrequencyFilterProvider =
+    NotifierProvider<VerbFrequencyFilterNotifier, String>(
+        VerbFrequencyFilterNotifier.new);
+
 // Bookmarked word IDs
 class BookmarkedWordIdsNotifier extends Notifier<Set<String>> {
   @override

@@ -164,6 +164,7 @@ class _ExerciseFlowScreenState extends ConsumerState<ExerciseFlowScreen> {
               },
             )
           : ConjugationExercise(
+              key: ValueKey(word.verbId),
               verb: getVerbById(word.verbId)!,
               selectedTenses: ref.read(selectedTensesProvider),
               onComplete: _onConjugationComplete,
