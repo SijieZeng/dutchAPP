@@ -1,16 +1,19 @@
-# dutchapp
+# DutchAPP - Nederlands Leren
 
-A new Flutter project.
+Dutch language learning app - companion for Nederlands textbooks (A0-B2).
 
-## Getting Started
+## Web Demo
 
-This project is a starting point for a Flutter application.
+**[https://sijiezeng.github.io/dutchAPP/](https://sijiezeng.github.io/dutchAPP/)**
 
-A few resources to get you started if this is your first Flutter project:
+## Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Vocabulary learning with spaced repetition
+- 179 irregular verb conjugation exercises (3 frequency levels)
+- Check-in streak tracking
+- Bookmark and review system
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Tech Stack
+
+- Flutter (iOS, Android, Web)
+- Riverpod for state management
